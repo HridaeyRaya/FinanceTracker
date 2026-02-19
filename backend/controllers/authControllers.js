@@ -83,3 +83,23 @@ export const getUserInfo = async (req, res) => {
       .json({ message: "Error registering user", error: err.message });
   }
 };
+
+// Update profile endpoint
+export const updateUserProfile = async (req, res) => {
+  try {
+    const { fullName, profileImageUrl } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      req.user.id,
+      { fullName, profileImageUrl },
+      { new: true },
+    );
+
+    res.status(200).json({
+      message: "Profile updated successfully",
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating profile", error });
+  }
+};

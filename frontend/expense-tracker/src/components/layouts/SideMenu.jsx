@@ -3,10 +3,12 @@ import { SIDE_MENU_DATA } from "../../utils/data";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import CharAvatar from "../Cards/CharAvatar.jsx";
+import EditProfileModal from "../layouts/EditProfileModal.jsx";
 
 const SideMenu = ({ activeMenu }) => {
   const { user, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
+  const [openEditProfile, setOpenEditProfile] = useState(false);
 
   const handleClick = (route) => {
     if (route === "logout") {
@@ -42,12 +44,14 @@ const SideMenu = ({ activeMenu }) => {
             className="w-20 h-20 bg-slate-300 rounded-full object-cover"
           />
         ) : (
-          <CharAvatar
-            fullName={user?.fullName || "Guest"}
-            width="w-20"
-            height="h-20"
-            style="text-xl"
-          />
+          <div onClick={() => setOpenEditProfile(true)} className="cursor-pointer">
+            <CharAvatar
+              fullName={user?.fullName || "Guest"}
+              width="w-20"
+              height="h-20"
+              style="text-xl"
+            />
+          </div>
         )}
         <h5 className="text-gray-950 font-medium leading-6">
           {user?.fullName || "Guest"}
@@ -66,6 +70,11 @@ const SideMenu = ({ activeMenu }) => {
           {item.label}
         </button>
       ))}
+
+      {/* Edit Profile Modal */}
+      {openEditProfile && (
+        <EditProfileModal onClose={() => setOpenEditProfile(false)} />
+      )}
 
     </div>
   );

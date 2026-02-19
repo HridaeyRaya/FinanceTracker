@@ -1,7 +1,11 @@
 import express from "express";
 
-import { registerUser, loginUser, getUserInfo } from "../controllers/authControllers.js";
-import {protect} from "../middleware/authMiddleware.js"
+import {
+  registerUser,
+  loginUser,
+  getUserInfo,
+} from "../controllers/authControllers.js";
+import { protect } from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMIddleware.js";
 
 const router = express.Router();
@@ -9,6 +13,7 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/getUser", protect, getUserInfo);
+router.put("/update-profile", protect, updateUserProfile);
 
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) {
@@ -22,6 +27,5 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
     imageUrl,
   });
 });
-
 
 export default router;
