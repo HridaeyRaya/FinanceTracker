@@ -65,7 +65,7 @@ const SideMenu = ({ activeMenu }) => {
           onClick={() => setOpenEditProfile(true)}
           className="text-xs text-primary hover:underline"
         >
-          ✏️ Edit Profile
+          Edit Profile
         </button>
       </div>
 
