@@ -4,6 +4,7 @@ import {
   registerUser,
   loginUser,
   getUserInfo,
+  updateUserProfile,
 } from "../controllers/authControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 import upload from "../middleware/uploadMIddleware.js";
