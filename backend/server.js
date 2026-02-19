@@ -7,7 +7,7 @@ import authRoutes from "../backend/routes/authRoutes.js";
 import { fileURLToPath } from "url";
 import incomeRoutes from "../backend/routes/incomeRoutes.js";
 import expenseRoutes from "../backend/routes/expenseRoutes.js";
-import dashboardRoutes from "../backend/routes/dashboardRoutes.js"
+import dashboardRoutes from "../backend/routes/dashboardRoutes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,13 +19,17 @@ const app = express();
 // Middleware to handle cors
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    // origin: process.env.CLIENT_URL || "*",
+    origin: "https://finance-tracker-nine-ashen.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+    credentials: true,
+  }),
 );
 
 app.use(express.json());
+
+app.options("*", cors());
 
 connectDB();
 
