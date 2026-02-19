@@ -20,13 +20,8 @@ const SideMenu = ({ activeMenu }) => {
 
   const handleLogout = () => {
     try {
-      // Clear local storage
       localStorage.clear();
-
-      // Clear user context safely
       if (clearUser) clearUser();
-
-      // Navigate to login page and replace history
       navigate("/login", { replace: true });
     } catch (error) {
       console.error("Logout failed:", error);
@@ -37,25 +32,41 @@ const SideMenu = ({ activeMenu }) => {
     <div className="w-64 h-[calc(100vh-61px)] bg-white border-r border-gray-200/50 p-5 sticky top-[61px] z-20">
       {/* User Info */}
       <div className="flex flex-col items-center gap-3 mt-3 mb-7">
-        {user?.profileImageUrl ? (
-          <img
-            src={user.profileImageUrl}
-            alt="Profile Image"
-            className="w-20 h-20 bg-slate-300 rounded-full object-cover"
-          />
-        ) : (
-          <div onClick={() => setOpenEditProfile(true)} className="cursor-pointer">
+        <div
+          className="relative cursor-pointer group"
+          onClick={() => setOpenEditProfile(true)}
+        >
+          {user?.profileImageUrl ? (
+            <img
+              src={user.profileImageUrl}
+              alt="Profile Image"
+              className="w-20 h-20 bg-slate-300 rounded-full object-cover"
+            />
+          ) : (
             <CharAvatar
               fullName={user?.fullName || "Guest"}
               width="w-20"
               height="h-20"
               style="text-xl"
             />
+          )}
+          {/* Hover overlay */}
+          <div className="absolute inset-0 bg-black/40 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+            <span className="text-white text-xs font-medium">Edit</span>
           </div>
-        )}
+        </div>
+
         <h5 className="text-gray-950 font-medium leading-6">
           {user?.fullName || "Guest"}
         </h5>
+
+        {/* Edit Profile Button */}
+        <button
+          onClick={() => setOpenEditProfile(true)}
+          className="text-xs text-primary hover:underline"
+        >
+          ✏️ Edit Profile
+        </button>
       </div>
 
       {/* Menu Items */}
@@ -75,7 +86,6 @@ const SideMenu = ({ activeMenu }) => {
       {openEditProfile && (
         <EditProfileModal onClose={() => setOpenEditProfile(false)} />
       )}
-
     </div>
   );
 };

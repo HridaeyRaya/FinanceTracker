@@ -28,7 +28,7 @@ const EditProfileModal = ({ onClose }) => {
 
             if (profilePic) {
                 const imgRes = await uploadImage(profilePic);
-                profileImageUrl = imgRes.imageUrl || "";
+                profileImageUrl = `${imgRes.imageUrl}?t=${Date.now()}` || "";
             }
 
             const response = await axiosInstance.put(API_PATHS.AUTH.UPDATE_PROFILE, {
