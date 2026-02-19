@@ -52,7 +52,8 @@ const EditProfileModal = ({ onClose }) => {
 
                 <div className='flex flex-col items-center gap-3 mb-4'>
                     <img
-                        src={preview || "https://via.placeholder.com/80"}
+                        src={preview || ""}
+                        onError={(e) => e.target.style.display = 'none'}
                         alt="Profile"
                         className='w-20 h-20 rounded-full object-cover border border-gray-200'
                     />
